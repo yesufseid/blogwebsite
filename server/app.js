@@ -5,11 +5,13 @@ const app=experss();
 const router=require("./routes/router")
 const errorHendlerFunction=require("./middleware/error-hendler")
 const notFound=require("./middleware/not-found")
+var cors = require('cors')
 
 
 //middlware
-app.use(experss.json());
-app.use(bodyparser.urlencoded({extended:true}))
+app.use(experss.json({limit: '25mb'}));
+// app.use(bodyparser.urlencoded({extended:true}))
+app.use(cors())
 
 
 

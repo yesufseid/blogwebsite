@@ -13,6 +13,7 @@ const verifyToken = require('../middleware/authJWT')
 
 
 
+
 router.route("/login").post(signin)
 router.route("/register").post(signup)
 router.route("/").get(verifyToken,getallPost).post(verifyToken,creatPost).patch(verifyToken,updatePost)

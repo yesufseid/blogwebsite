@@ -18,16 +18,18 @@ const getallPost=asyncWarapper( async(req,res)=>{
 });
 
 const creatPost=asyncWarapper( async(req,res,next)=>{
-  if (!req.user) {
-    res.status(403)
-      .send({
-        message: "Invalid JWT token"
-      });
-  }
+  // if (!req.user) {
+  //   res.status(403)
+  //     .send({
+  //       message: "Invalid JWT token"
+  //     });
+  // }
+  
   const {title,content,img}=req.body
   const post=await prisma.post.create({
     data:{
       title:title,
+      img:img,
       content:content,
     }
   })
@@ -77,6 +79,7 @@ const updatePost=asyncWarapper( async(req,res,next)=>{
 //post route
 const getPost=asyncWarapper( async(req,res,next)=>{
     const id=Number(req.params.postId)
+    console.log(id);
     const post = await prisma.post.findUnique({
       where: {
         id: id,

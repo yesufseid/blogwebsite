@@ -1,7 +1,8 @@
-
-
+import CreatePost from '../commponents/CreatePost'
 export default function Home() {
   return (
-    <div>Home</div>
+    <div>
+        <CreatePost />
+    </div>
   )
 }
