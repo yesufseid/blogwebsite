@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE `post` MODIFY `content` LONGTEXT NOT NULL,
+    MODIFY `title` LONGTEXT NOT NULL;

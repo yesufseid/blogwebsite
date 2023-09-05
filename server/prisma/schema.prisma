@@ -10,8 +10,8 @@ datasource db {
 
 model post {
   id      Int    @id @default(autoincrement())
-  title String
-  content String
+  title String     @db.LongText
+  content String   @db.LongText
   img  String? @db.LongText
 }
 

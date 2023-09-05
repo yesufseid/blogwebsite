@@ -18,12 +18,12 @@ const getallPost=asyncWarapper( async(req,res)=>{
 });
 
 const creatPost=asyncWarapper( async(req,res,next)=>{
-  // if (!req.user) {
-  //   res.status(403)
-  //     .send({
-  //       message: "Invalid JWT token"
-  //     });
-  // }
+  if (!req.user) {
+    res.status(403)
+      .send({
+        message: "Invalid JWT token"
+      });
+  }
   
   const {title,content,img}=req.body
   const post=await prisma.post.create({

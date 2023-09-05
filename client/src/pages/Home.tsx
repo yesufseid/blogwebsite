@@ -1,18 +1,35 @@
 import CreatePost from '../commponents/CreatePost'
-import { useNavigate } from "react-router-dom"
-import { useEffect } from 'react'
+
+import { useEffect} from 'react'
+import { useNavigate } from 'react-router-dom'
 export default function Home() {
-  const navigate=useNavigate()
+  // const [open,setOpen]=useState(false)
+const Naviagte=useNavigate()
+const session=window.localStorage
+
+
 useEffect(()=>{
-   const session=window.localStorage
-   console.log(session);
-  if(session.length===0) return navigate("/login")
-},[])   
+  const now = new Date()
+  if (!session) {
+		return null
+	}
+  if(session.length===0)  Naviagte("/login")
+  if (now.getTime() >  Number(session.expiry)) {
+		localStorage.clear()
+		return null
+	}
+})   
   
+
+
 
   return (
     <div>
-        <CreatePost />
+      <div>
+      <CreatePost  />
+      </div>
+      
+        {/* {open?(<Login />):null} */}
     </div>
   )
 }

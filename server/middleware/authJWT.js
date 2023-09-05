@@ -7,7 +7,7 @@ const prisma = new PrismaClient()
 const verifyToken =(req, res, next) => {
 
   if (req.headers && req.headers.authorization && req.headers.authorization) {
-    jwt.verify(req.headers.authorization, process.env.API_SECRET, function (err, decode) {
+     jwt.verify(req.headers.authorization, process.env.API_SECRET, function (err, decode) {
       if (err) req.user = undefined;
 
       const user= prisma.user.findUnique({
