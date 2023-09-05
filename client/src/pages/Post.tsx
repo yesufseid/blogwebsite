@@ -1,6 +1,6 @@
 import Navbar from "../commponents/Navbar"
 import { useQuery } from "@tanstack/react-query"
-import getPost from "../api/post"
+import {getPost} from "../api/post"
 
 export default function Home() {
   const postQuery=useQuery({
