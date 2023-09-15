@@ -13,9 +13,20 @@ const getallPost=asyncWarapper( async(req,res)=>{
         message: "Invalid JWT token"
       });
   }
-  const allPosts = await prisma.post.findMany()
-        res.status(200).json({allPosts})
+
+  const AllPosts = await prisma.post.findMany()
+  if(!AllPosts){
+    const error={
+      message:`file not found in this ${id} id`,
+      status:404
+    }
+    res.status(404).json({msg:error})
+  }
+    
+  console.log("1");
+  res.status(200).json({AllPosts})
 });
+
 
 const creatPost=asyncWarapper( async(req,res,next)=>{
   if (!req.user) {
@@ -44,17 +55,19 @@ const creatPost=asyncWarapper( async(req,res,next)=>{
 });
 
 const updatePost=asyncWarapper( async(req,res,next)=>{
+  console.log("hellow");
   if (!req.user) {
     res.status(403)
       .send({
         message: "Invalid JWT token"
       });
   }
-  const {title,content}=req.body
+  const {title,content,img}=req.body
   const id=Number(req.body.id)
   const post = await prisma.post.update({
     where: { id: id },
     data: { title:title,
+             img:img,
             content:content
      },
   })
@@ -96,7 +109,14 @@ const getPost=asyncWarapper( async(req,res,next)=>{
 });
 
 const deletPost=asyncWarapper( async(req,res,next)=>{
+  if (!req.user) {
+    res.status(403)
+      .send({
+        message: "Invalid JWT token"
+      });
+  }
   const id=Number(req.params.postId)
+  console.log(id);
 
   const post = await prisma.post.delete({
     where: { id:id },

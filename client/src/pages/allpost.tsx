@@ -1,58 +1,59 @@
 
-import { experimentalStyled as styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
-import { getallPost } from '../api/post';
-import { useQuery } from '@tanstack/react-query';
+import { getallPost,DeletePost } from '../api/post';
+import { useQuery,useMutation,useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-  ...theme.typography.body2,
-  padding: theme.spacing(2),
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
-}));
+import Navbar from '../commponents/Navbar';
 
 export default function ResponsiveGrid() {
+  const queryclient=useQueryClient()
     const Naviget=useNavigate()
     const postQuery=useQuery({
         queryKey:["posts"],
-        queryFn:getallPost
+        queryFn:getallPost,
       })
-       
+     
+    const{mutate}=useMutation(DeletePost,{
+onSuccess:()=>{
+  queryclient.invalidateQueries({ queryKey: ['posts'] })
+}
+    })    
+const handlemutate=(id)=>{
+   return mutate(id)
+}
+
       if(postQuery.isLoading) return <h1>...loding</h1>
       if(postQuery.isError) return <pre>{JSON.stringify(postQuery.error)}</pre>
-      const posts=postQuery.data.allPosts
-   
+      const posts=postQuery.data.AllPosts
+       console.log(posts);
+       
       
 
    const handler=(id)=>{
-    return Naviget("/post/"+id)
+    return Naviget("/allpost/"+id)
    }   
-
-
-
-
   return (
-    <Box sx={{ flexGrow: 1, }}>
-      <Grid container spacing={{ xs: 2, md:1 }} columns={{ xs: 4, sm: 8, md: 12 }} >
-        {posts.map((post)=>(
-          <Grid item xs={6} sm={6} md={4}  >
-            <Item sx={{
-                       padding:0,
-                       margin:1 }}>
-          <div onClick={()=>handler(post.id)}  className=" border-2 rounded-lg  border-stone-950 transition ease-in-out delay-150
+     <div>
+     <Navbar />
+      <div className='grid md:grid-cols-3 gap-5 px-6 pt-3 cursor-pointer h-full bg-white'>
+        {posts?.map((post)=>{
+        
+        return(
+          <div    className="text-semiwhite bg-bray border-2 rounded-lg transition ease-in-out delay-150
            hover:-translate-y-1 hover:scale-110 hover:border-sky-600 duration-300  shadow-xl">
           <h1 className="text-left my-3 mx-5 font-serif font-bold">{post.title}</h1>
-          <p  className="text-left my-3 mx-5 font-mono font-semibold">{post.content.slice(0, 100)}</p>
+          <p  onClick={()=>handler(post.id)} className="text-left my-3 mx-5 font-mono font-semibold">{post.content.slice(0, 100)} <span className='text-sky-500'> ...</span></p>
+           <div className='flex justify-end  gap-5'>
+          <DeleteForeverIcon className=' cursor-pointer transition ease-in-out delay-150
+           hover:-translate-y-1 hover:scale-110 hover:border-sky-600 duration-300  shadow-xl' onClick={()=>handlemutate(post.id)} />
+           </div>
           </div>
-         </Item>
-          </Grid>
-       
-       ))}
-      </Grid>
-    </Box>
+       )})}
+       </div>
+       {/* <div className='h-full bg-black text-white'>
+        fotter
+       </div> */}
+       </div>
   );
 }

@@ -24,7 +24,7 @@ useEffect(()=>{
 
 
   return (
-    <div>
+    <div className='bg-white'>
       <div>
       <CreatePost  />
       </div>

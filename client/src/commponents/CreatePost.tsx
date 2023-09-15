@@ -1,6 +1,7 @@
 import { useState } from "react"
 import Navbar from "./Navbar"
 import { Link,} from "react-router-dom"
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 
 export default function CreatePost() {
@@ -59,22 +60,24 @@ const postData=async()=>{
 //   }
 
   return (
-    <div>
+    <div className="h-screen w-screen">
       <Navbar />
-      <div className="mx-20">
+      <div className=" mx-5 md:mx-20">
       <div className="mt-10">
         <label htmlFor="" className="my-5">Title</label> <br />
         <input type="text"  className=" border-2 border-sky-500 rounded-lg w-96 h-10 my-5" onChange={(e)=>setTitle(e.target.value)} />
       </div>
       <div>
-        <input type="file" className="my-5" onChange={e=>fileUplode(e)} />
+        <label htmlFor="file"><CloudUploadIcon />  Upload Image</label>
+        <input type="file"  id="file" className="my-5 invisible " onChange={e=>fileUplode(e)}   />
       </div>
        <div>
-        <textarea name="content" className="border-2 border-sky-500 rounded-lg" cols={150} rows={10} onChange={e=>setText(e.target.value)}> </textarea>
+        <h1>Content</h1>
+        <textarea name="content" className="border-2 border-sky-500 rounded-lg w-96 md:w-full h-52 md:h-60" onChange={e=>setText(e.target.value)}> </textarea>
        </div>
       
-       <button className="border-2 rounded-md bg-sky-600 w-24 h-8 hover:bg-transparent" onClick={()=>postData()}>Post</button> <br />
-      {id?(<Link  className="text-blue-600" to={"/post/id"}>http://localhost:3000/api/post/{id}</Link>):null}
+       <button className="border-2 hover:border-slate-950 mt-5 mr-5  rounded-md bg-sky-600 w-24 h-8 hover:bg-transparent" onClick={()=>postData()}>Post</button>
+      {id?(<Link  className="text-blue-600" to={`/allpost/${id}`}>http://localhost:5173/allpost/{id}</Link>):null}
        </div>
     </div>
 
