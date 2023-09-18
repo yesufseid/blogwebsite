@@ -32,6 +32,7 @@ app.use(notFound)
 const port=process.env.PORT || 3000;
 const start =async()=>{
     try {
+        
      app.listen(port,function(){
             console.log(`server running on port ${port}`);
         })
