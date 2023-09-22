@@ -64,16 +64,16 @@ const postData=async()=>{
       <Navbar />
       <div className=" mx-5 md:mx-20">
       <div className="mt-10">
-        <label htmlFor="" className="my-5">Title</label> <br />
-        <input type="text"  className=" border-2 border-sky-500 rounded-lg w-96 h-10 my-5" onChange={(e)=>setTitle(e.target.value)} />
+        <label htmlFor="" className="my-5 text-2xl">Title</label> <br />
+        <input type="text"  className=" border-2 border-sky-500 rounded-lg w-80 md:w-96 h-10 my-5" onChange={(e)=>setTitle(e.target.value)} />
       </div>
-      <div>
+      <div className="mt-3">
         <label htmlFor="file"><CloudUploadIcon />  Upload Image</label>
-        <input type="file"  id="file" className="my-5 invisible " onChange={e=>fileUplode(e)}   />
+        <input type="file"  id="file" className="mt-5 invisible " onChange={e=>fileUplode(e)}   />
       </div>
        <div>
-        <h1>Content</h1>
-        <textarea name="content" className="border-2 border-sky-500 rounded-lg w-96 md:w-full h-52 md:h-60" onChange={e=>setText(e.target.value)}> </textarea>
+        <h1 className="text-2xl mb-3"> Content</h1>
+        <textarea name="content" className="border-2 border-sky-500 rounded-lg w-80 md:w-full h-52 md:h-60" onChange={e=>setText(e.target.value)}> </textarea>
        </div>
       
        <button className="border-2 hover:border-slate-950 mt-5 mr-5  rounded-md bg-sky-600 w-24 h-8 hover:bg-transparent" onClick={()=>postData()}>Post</button>

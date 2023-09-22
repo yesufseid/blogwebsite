@@ -56,8 +56,8 @@ const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => 
   event.preventDefault();
 };
   return (
-    <div className="absolute top-24 left-1/3" >
-    <div className="flex justify-center w-96 h-96   first-line:px-20 bg-slate-500  rounded-md shadow-2xl transition ease-out  hover:-translate-y-1 hover:scale-110 duration-300">
+    <div className=" md:absolute md:top-24 md:left-1/3" >
+    <div className="flex justify-center md:w-96 md:h-96  h-screen  first-line:px-20 bg-slate-500  rounded-md shadow-2xl transition ease-out  hover:-translate-y-1 hover:scale-110 duration-300">
       <div className="my-auto">
       <div className="pb-2 ml-1">
       <label htmlFor=""className="py-2" >Email</label><br />

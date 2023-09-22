@@ -59,7 +59,7 @@ const postData=async()=>{
     <div>
       <div className="px-5 text-center">
           
-      <input type="text" className="my-5 font-semibold text-5xl text-left" defaultValue={title}  onChange={(e)=>setTitle(e.target.value)}
+      <input type="text" className="my-5 font-semibold text-5xl text-center focus:border-green-600  md:w-full w-80 " defaultValue={title}  onChange={(e)=>setTitle(e.target.value)}
        />
    {
      <div>
@@ -67,7 +67,7 @@ const postData=async()=>{
      <input type="file"  id="file" className="my-5 invisible " onChange={e=>fileUplode(e)}   />
    </div>
    }
-      <textarea className="text-justify my-5 leading-relaxed font-semibold w-96 md:w-full h-52 md:h-96"  defaultValue={text} onChange={e=>setText(e.target.value)}/>
+      <textarea className="text-justify my-5 leading-relaxed font-semibold w-80  md:w-full  h-screen md:h-96"  defaultValue={text} onChange={e=>setText(e.target.value)}/>
       </div>
       <button onClick={()=>postData()} className="hover:bg-sky-500 rounded-lg px-3 py-2 my-5 bg-black text-white mx-auto">Save change</button>
       {id?(<Link  className="text-blue-600" to={`/allpost/${id}`}>http://localhost:5173/allpost/{id}</Link>):null}
