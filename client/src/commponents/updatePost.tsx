@@ -3,6 +3,7 @@ import { useState } from "react"
 import { Link,} from "react-router-dom"
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import Progress from "./progress";
+import Error from "../pages/error";
 
 
 export default function Home({ids,titles,img,content}) {
@@ -45,7 +46,7 @@ const postData=async()=>{
   
   const res=await fetch("http://localhost:3000/api",options)
   setLoading(false)
-  if(!res.ok) return console.log("error");
+  if(!res.ok) return <Error />
   
   if(res.ok){
     const post=await res.json()
@@ -74,9 +75,8 @@ const postData=async()=>{
    </div>
    }
       <textarea className="text-justify my-5 leading-relaxed font-semibold w-80  md:w-full  h-screen md:h-96"  defaultValue={text} onChange={e=>setText(e.target.value)}/>
-      </div>
-      {/* <button onClick={()=>postData()} className="hover:bg-sky-500 rounded-lg px-3 py-2 my-5 bg-black text-white mx-auto">Save change</button>
-      {id?(<Link  className="text-blue-600" to={`/allpost/${id}`}>http://localhost:5173/allpost/{id}</Link>):null} */}
+      </div >
+      
        <button className="flex w-32 py-2 mt-5 bg-slate-700 hover:outline hover:bg-transparent justify-center  rounded-full align-middle" onClick={()=>postData()}>{isLoading?(<Progress />):(<h1>save changs</h1>)}</button>
       {id?(<div className="md:flex mx-3 md:items-center ">
         <Link  className="text-blue-600 mt-3 mr-5" to={`/allpost/${id}`}>http://localhost:5173/allpost/{id}

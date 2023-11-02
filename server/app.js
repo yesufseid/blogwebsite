@@ -11,13 +11,13 @@ var cors = require('cors')
 //middlware
 app.use(experss.json({limit: '25mb'}));
 // app.use(bodyparser.urlencoded({extended:true}))
-app.use(cors({
-    origin:["https://seya-blogwebsite.vercel.app"],
-    methods:["POST","GET","DELETE","PUT"],
-    Credential:true
-}))
+app.use(cors())
 
-
+// {
+    //     origin:["https://seya-blogwebsite.vercel.app"],
+    //     methods:["POST","GET","DELETE","PUT"],
+    //     Credential:true
+    // }
 
 
 

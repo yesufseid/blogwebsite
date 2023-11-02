@@ -1,6 +1,7 @@
 
-import logo from "../../public/avatar-1001305737882.jpg"
+import logo from "../assets/avatar-1001305737882.jpg"
 import { NavLink } from "react-router-dom";
+
 
 
 export default function Navbar() {
@@ -38,6 +39,14 @@ export default function Navbar() {
            }
          >
            All Posts
+         </NavLink>
+         <NavLink
+           to="/register"
+           className={({ isActive, isPending }) =>
+             isPending ? "pending" : isActive ? "active" : ""
+           }
+         >
+           register
          </NavLink>
           </div>
           

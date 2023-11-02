@@ -5,6 +5,7 @@ import UpdatePost from '../commponents/updatePost'
 import EditIcon from '@mui/icons-material/Edit';
 import { useState } from "react";
 import Loading from './loading';
+import Error from "./error";
 
 export default function Home() {
   const session=window.localStorage
@@ -25,7 +26,7 @@ const getPost=async()=>{
   })
    
   if(postQuery.isLoading) return <Loading />
-  if(postQuery.isError) return <pre>{JSON.stringify(postQuery.error)}</pre>
+  if(postQuery.isError) return <Error />
 const{title,content,img}=postQuery.data
 
 

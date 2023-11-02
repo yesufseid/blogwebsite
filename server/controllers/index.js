@@ -14,7 +14,18 @@ const getallPost=asyncWarapper( async(req,res)=>{
       });
   }
 
-  const AllPosts = await prisma.post.findMany()
+  const AllPosts = await prisma.post.findMany({
+    select:{
+      id:true,
+      title:true,
+      content:true
+    },
+    orderBy: [
+      {
+        id:'desc',
+      },
+    ],
+  })
   if(!AllPosts){
     const error={
       message:`file not found in this ${id} id`,

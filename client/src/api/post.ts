@@ -19,7 +19,7 @@ export const getallPost =async () => {
   const session=window.localStorage
   const accessToken=session.accessToken
    
-  const res=await fetch("http://localhost:3000/api",{
+  const res=await fetch("http://localhost:3000/api/",{
      method:"GET",
      headers: {
       'Content-Type': 'application/json',
