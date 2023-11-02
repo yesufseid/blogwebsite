@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 import UpdatePost from '../commponents/updatePost'
 import EditIcon from '@mui/icons-material/Edit';
 import { useState } from "react";
+import Loading from './loading';
 
 export default function Home() {
   const session=window.localStorage
@@ -23,7 +24,7 @@ const getPost=async()=>{
     queryFn:getPost
   })
    
-  if(postQuery.isLoading) return <h1>...loding</h1>
+  if(postQuery.isLoading) return <Loading />
   if(postQuery.isError) return <pre>{JSON.stringify(postQuery.error)}</pre>
 const{title,content,img}=postQuery.data
 

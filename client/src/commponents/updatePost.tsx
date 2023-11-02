@@ -1,6 +1,8 @@
 
 import { useState } from "react"
 import { Link,} from "react-router-dom"
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import Progress from "./progress";
 
 
 export default function Home({ids,titles,img,content}) {
@@ -10,10 +12,13 @@ export default function Home({ids,titles,img,content}) {
     const [image,setimage]=useState(img)
     const [text,setText]=useState(content)
     const [id,setId]=useState()
+    const [isLoading,setLoading]=useState(false)
 
 
 
-
+    const handleCopy=()=>{
+      navigator.clipboard.writeText("http://localhost:5173/allpost/"+id)
+   }
 
 const fileUplode=async(e)=>{
     const file=e.target.files[0]
@@ -36,14 +41,15 @@ const options = {
   body: JSON.stringify(data)
 }; 
 const postData=async()=>{
-  console.log("ghjk");
+  setLoading(true)
   
   const res=await fetch("http://localhost:3000/api",options)
+  setLoading(false)
   if(!res.ok) return console.log("error");
   
   if(res.ok){
     const post=await res.json()
-    
+      
     return setId(post.id)
   }
  
@@ -69,8 +75,13 @@ const postData=async()=>{
    }
       <textarea className="text-justify my-5 leading-relaxed font-semibold w-80  md:w-full  h-screen md:h-96"  defaultValue={text} onChange={e=>setText(e.target.value)}/>
       </div>
-      <button onClick={()=>postData()} className="hover:bg-sky-500 rounded-lg px-3 py-2 my-5 bg-black text-white mx-auto">Save change</button>
-      {id?(<Link  className="text-blue-600" to={`/allpost/${id}`}>http://localhost:5173/allpost/{id}</Link>):null}
+      {/* <button onClick={()=>postData()} className="hover:bg-sky-500 rounded-lg px-3 py-2 my-5 bg-black text-white mx-auto">Save change</button>
+      {id?(<Link  className="text-blue-600" to={`/allpost/${id}`}>http://localhost:5173/allpost/{id}</Link>):null} */}
+       <button className="flex w-32 py-2 mt-5 bg-slate-700 hover:outline hover:bg-transparent justify-center  rounded-full align-middle" onClick={()=>postData()}>{isLoading?(<Progress />):(<h1>save changs</h1>)}</button>
+      {id?(<div className="md:flex mx-3 md:items-center ">
+        <Link  className="text-blue-600 mt-3 mr-5" to={`/allpost/${id}`}>http://localhost:5173/allpost/{id}
+      </Link> <ContentCopyIcon  onClick={handleCopy} className=' cursor-pointer transition ease-in-out delay-150
+           hover:-translate-y-1 hover:scale-110 hover:border-sky-600 duration-300  shadow-xl'/></div> ):null}
       </div>
   )
 }

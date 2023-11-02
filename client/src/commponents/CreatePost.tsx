@@ -2,6 +2,8 @@ import { useState } from "react"
 import Navbar from "./Navbar"
 import { Link,} from "react-router-dom"
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import Progress from "./progress";
 
 
 export default function CreatePost() {
@@ -11,12 +13,21 @@ export default function CreatePost() {
     const [image,setimage]=useState("")
     const [text,setText]=useState("")
     const [id,setId]=useState()
+    const [isLoading,setLoading]=useState(false)
 const fileUplode=async(e)=>{
     const file=e.target.files[0]
     const Base64= await ConvertToBase64(file)
     return setimage(Base64)
 }
-  
+
+
+const handleCopy=()=>{
+   navigator.clipboard.writeText("http://localhost:5173/allpost/"+id)
+}
+
+
+
+
 const data={
   title:title,
   content:text,
@@ -31,13 +42,14 @@ const options = {
   body: JSON.stringify(data)
 }; 
 const postData=async()=>{
+  setLoading(true)
   const res=await fetch("http://localhost:3000/api",options)
+  setLoading(false)
   if(!res.ok) return console.log("error");
   
   if(res.ok){
     const post=await res.json()
-    
-    return setId(post.id)
+   return  setId(post.id)
   }
  
 
@@ -63,21 +75,25 @@ const postData=async()=>{
     <div className="h-screen w-screen">
       <Navbar />
       <div className=" mx-5 md:mx-20">
-      <div className="mt-10">
+      <div className="mt-5">
         <label htmlFor="" className="my-5 text-2xl">Title</label> <br />
         <input type="text"  className=" border-2 border-sky-500 rounded-lg w-80 md:w-96 h-10 my-5" onChange={(e)=>setTitle(e.target.value)} />
       </div>
-      <div className="mt-3">
+      <div className="mt">
         <label htmlFor="file"><CloudUploadIcon />  Upload Image</label>
-        <input type="file"  id="file" className="mt-5 invisible " onChange={e=>fileUplode(e)}   />
+        <input type="file"  id="file" className="mt- invisible " onChange={e=>fileUplode(e)}   />
       </div>
        <div>
-        <h1 className="text-2xl mb-3"> Content</h1>
+        <h1 className="text-2xl mb-3 mt-3"> Content</h1>
         <textarea name="content" className="border-2 border-sky-500 rounded-lg w-80 md:w-full h-52 md:h-60" onChange={e=>setText(e.target.value)}> </textarea>
        </div>
-      
-       <button className="border-2 hover:border-slate-950 mt-5 mr-5  rounded-md bg-sky-600 w-24 h-8 hover:bg-transparent" onClick={()=>postData()}>Post</button>
-      {id?(<Link  className="text-blue-600" to={`/allpost/${id}`}>http://localhost:5173/allpost/{id}</Link>):null}
+        <div className="md:flex md:items-center">
+       <button className="flex w-32 py-2 mt-5 bg-slate-700 hover:outline hover:bg-transparent justify-center  rounded-full align-middle" onClick={()=>postData()}>{isLoading?(<Progress />):(<h1>Post</h1>)}</button>
+      {id?(<div className="md:flex mx-3 items-center ">
+        <Link  className="text-blue-600 mt-3 mr-5 " to={`/allpost/${id}`}>http://localhost:5173/allpost/{id}
+      </Link> <ContentCopyIcon  onClick={handleCopy} className=' cursor-pointer transition ease-in-out delay-150
+           hover:-translate-y-1 hover:scale-110 hover:border-sky-600 duration-300  shadow-xl'/></div> ):null}
+      </div>
        </div>
     </div>
 

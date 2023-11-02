@@ -3,28 +3,32 @@ import { getallPost,DeletePost } from '../api/post';
 import { useQuery,useMutation,useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-
+import Loading from './loading';
 import Navbar from '../commponents/Navbar';
+// import { ToastContainer, toast } from 'react-toastify';
+//   import 'react-toastify/dist/ReactToastify.css';
 
 export default function ResponsiveGrid() {
+  // const notify = () => toast("internal server error!");
+  const Naviget=useNavigate()
   const queryclient=useQueryClient()
-    const Naviget=useNavigate()
     const postQuery=useQuery({
         queryKey:["posts"],
         queryFn:getallPost,
       })
      
-    const{mutate}=useMutation(DeletePost,{
+ const{mutate}=useMutation(DeletePost,{
 onSuccess:()=>{
   queryclient.invalidateQueries({ queryKey: ['posts'] })
 }
     })    
 const handlemutate=(id)=>{
+  alert("this action deletes the post permanetliy")
    return mutate(id)
 }
 
-      if(postQuery.isLoading) return <h1>...loding</h1>
-      if(postQuery.isError) return <pre>{JSON.stringify(postQuery.error)}</pre>
+      if(postQuery.isLoading) return <Loading />
+      if(postQuery.isError) return null
       const posts=postQuery.data.AllPosts
        console.log(posts);
        
@@ -36,7 +40,7 @@ const handlemutate=(id)=>{
   return (
      <div>
      <Navbar />
-      <div className='grid md:grid-cols-3 gap-5 px-6 pt-3 cursor-pointer h-full bg-white'>
+      <div className='grid md:grid-cols-3 gap-5 px-3 pt-3 cursor-pointer h-full bg-white'>
         {posts?.map((post)=>{
         
         return(
@@ -54,6 +58,7 @@ const handlemutate=(id)=>{
        {/* <div className='h-full bg-black text-white'>
         fotter
        </div> */}
+       {/* <ToastContainer /> */}
        </div>
   );
 }
