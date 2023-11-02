@@ -13,7 +13,7 @@ app.use(experss.json({limit: '25mb'}));
 // app.use(bodyparser.urlencoded({extended:true}))
 app.use(cors(
     {
-        origin:["https://semntun_beterik.vercel.app"],
+        origin:["https://semntun-beterik-1whq.vercel.app"],
         methods:["POST","GET","DELETE","PUT"],
         credentials:true
     }
