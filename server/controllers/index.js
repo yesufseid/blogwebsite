@@ -7,13 +7,13 @@ const asyncWarapper=require("../middleware/async")
 
 //index route
 const getallPost=asyncWarapper( async(req,res)=>{
-  if (!req.user) {
-    res.status(403)
-      .send({
-        message: "Invalid JWT token"
-      });
-  }
-
+  // if (!req.user) {
+  //   res.status(403)
+  //     .send({
+  //       message: "Invalid JWT token"
+  //     });
+  // }
+  res.status(200).json({"hellow"})
   const AllPosts = await prisma.post.findMany({
     select:{
       id:true,
