@@ -23,7 +23,7 @@ app.use(cors(
 
 
 //routes
-app.use("/",router);
+app.use("/api",router);
 
 
 
